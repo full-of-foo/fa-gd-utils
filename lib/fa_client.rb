@@ -11,7 +11,6 @@ module FAClient
   end
 
   def self.get_business(token)
-    puts "Fetching business: #{token}"
     self.get_resource("business", token)
   end
 

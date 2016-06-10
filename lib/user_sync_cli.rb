@@ -32,17 +32,19 @@ class UserSyncCLI < Thor
 
   desc "Synchronise users", "Synchronise whitelisted FA users with GD"
   def sync_users
-    # businesses = collect_businesses
+    businesses = collect_businesses
     projects = collect_projects
-    projects.each {|p| puts p.title}
 
-    # businesses.each do |biz|
-    #   matching_projs = projects.select { |p| p.title == biz.gd_name }
-    #   puts biz.name, matching_projs.size
-    #
-    #
-    #
-    # end
+    businesses.each do |biz|
+      matching_projs = projects.select { |p| p.title == biz.gd_name }
+      matching_projs.each do |proj|
+        is_synced = proj.users.map(&:login).uniq.sort == biz.users.map(&:email).uniq.sort
+        puts "#{biz.name} synced with #{proj.id}: #{is_synced}"
+        if not is_synced
+          
+        end
+      end
+    end
   end
 
   private
